@@ -12,7 +12,8 @@ class NetworkManager: NetworkType {
     //public var requestTimeOut: Float = 50
     
     func get<T: Decodable>(type: T.Type, url: URL?, headers: Headers
-                          // ,timeout: Float?
+                          // ,timeout: Float?,
+                          //  queries: [String: Any] 
                            ) -> AnyPublisher<T, Error>  {
         
         guard let url = url else {
