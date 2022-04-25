@@ -10,19 +10,20 @@ import Combine
 
 class NetworkManager: NetworkType {
     //public var requestTimeOut: Float = 50
+    static let sharedInstance = NetworkManager()
     
-    func get<T: Decodable>(type: T.Type, url: URL?, headers: Headers
+    func get<T: Decodable>(type: T.Type, endpoint: Endpoint, headers: Headers
                           // ,timeout: Float?,
-                          //  queries: [String: Any] 
                            ) -> AnyPublisher<T, Error>  {
         
-        guard let url = url else {
-            return AnyPublisher (
-                Fail<T, Error>(error: NetworkError.invalidRequest)
-            )
-        }
+//        guard let url = url else {
+//            return AnyPublisher (
+//                Fail<T, Error>(error: NetworkError.invalidRequest)
+//            )
+//        }
         
-        var urlRequest = URLRequest(url: url)
+        var urlRequest = endpoint.createUrl()
+        //URLRequest(url: url)
         headers.forEach { (key, value) in
                     if let value = value as? String {
                         urlRequest.setValue(value, forHTTPHeaderField: key)

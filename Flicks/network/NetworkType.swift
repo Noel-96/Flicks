@@ -16,7 +16,7 @@ protocol NetworkType {
     typealias Headers = [String: Any]
         
         func get<T>(type: T.Type,
-                    url: URL?,
+                    endpoint: Endpoint,
                     headers: Headers
                     //,timeout: Float?
         ) -> AnyPublisher<T, Error> where T: Decodable
