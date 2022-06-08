@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="20G417" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="LikedMovie" representedClassName="LikedMovie" syncable="YES" codeGenerationType="class"/>
-    <entity name="Movie" representedClassName="Movie" syncable="YES" codeGenerationType="class">
-        <attribute name="id" attributeType="String"/>
+    <entity name="LikedMovie" representedClassName=".LikedMovie" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="overview" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Movie" representedClassName=".Movie" syncable="YES" codeGenerationType="category">
+        <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="overview" optional="YES" attributeType="String"/>
         <attribute name="popularity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="posterPath" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="details" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="MovieDetails" inverseName="movie" inverseEntity="MovieDetails"/>
+        <relationship name="details" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MovieDetails" inverseName="movie" inverseEntity="MovieDetails"/>
     </entity>
-    <entity name="MovieDetails" representedClassName="MovieDetails" syncable="YES" codeGenerationType="class">
-        <attribute name="id" attributeType="String"/>
+    <entity name="MovieDetails" representedClassName=".MovieDetails" syncable="YES" codeGenerationType="category">
+        <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="originalLanguage" optional="YES" attributeType="String"/>
         <attribute name="overview" optional="YES" attributeType="String"/>
         <attribute name="posterPath" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="movie" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Movie" inverseName="details" inverseEntity="Movie"/>
+        <relationship name="movie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="details" inverseEntity="Movie"/>
     </entity>
     <elements>
-        <element name="Movie" positionX="-63" positionY="-18" width="128" height="119"/>
-        <element name="MovieDetails" positionX="-36" positionY="45" width="128" height="119"/>
-        <element name="LikedMovie" positionX="-9" positionY="99" width="128" height="29"/>
+        <element name="LikedMovie" positionX="-9" positionY="99" width="128" height="59"/>
+        <element name="Movie" positionX="-9" positionY="117" width="128" height="119"/>
+        <element name="MovieDetails" positionX="-9" positionY="144" width="128" height="119"/>
     </elements>
 </model>

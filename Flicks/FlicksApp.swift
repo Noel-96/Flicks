@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct FlicksApp: App {
+    let persistenceController = PersistenceController.shared
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MovieListView()
+                .environment(\.managedObjectContext, persistenceController.viewContext)
         }
     }
 }

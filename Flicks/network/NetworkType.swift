@@ -17,7 +17,8 @@ protocol NetworkType {
         
         func get<T>(type: T.Type,
                     endpoint: Endpoint,
-                    headers: Headers
+                    headers: Headers,
+                    decoder: JSONDecoder
                     //,timeout: Float?
         ) -> AnyPublisher<T, Error> where T: Decodable
     

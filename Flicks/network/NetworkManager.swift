@@ -1,18 +1,15 @@
-//
-//  NetworkManger.swift
-//  Flicks
-//
-//  Created by Noel Obaseki on 21/04/2022.
-//
-
 import Foundation
 import Combine
+
+enum DecoderConfigurationError: Error {
+  case missingManagedObjectContext
+}
 
 class NetworkManager: NetworkType {
     //public var requestTimeOut: Float = 50
     static let sharedInstance = NetworkManager()
     
-    func get<T: Decodable>(type: T.Type, endpoint: Endpoint, headers: Headers
+    func get<T: Decodable>(type: T.Type, endpoint: Endpoint, headers: Headers, decoder: JSONDecoder
                           // ,timeout: Float?,
                            ) -> AnyPublisher<T, Error>  {
         
@@ -33,14 +30,29 @@ class NetworkManager: NetworkType {
         
       return URLSession.shared.dataTaskPublisher(for: urlRequest)
             .mapError { _ in NetworkError.invalidRequest }
-            .tryMap({ try NetworkManager.handleURLResponse(output: $0 )})
-            .decode(type: T.self, decoder: JSONDecoder())
-            .mapError { error in NetworkError.jsonDecodingError(error: error)}
-        // process on background/private queue
-            .subscribe(on: DispatchQueue.global(qos: .background))
-        // send result on main queue
+            .tryMap({ (apiResponse) -> T in
+//                guard let httpResponse = apiResponse.response as? HTTPURLResponse, httpResponse.statusCode != 204 else { print("httpResponseerror")}
+                
+                do {
+                    return try decoder.decode(T.self, from: apiResponse.data)
+                }
+//                catch (let error) {
+//                    if let dictionary = try JSONSerialization.jsonObject(with: apiResponse.data, options: .mutableContainers) as? [String: Any] {
+//                        print("dict error")
+//                    }
+//                    print("local error")
+//                }
+            })  .subscribe(on: DispatchQueue.global(qos: .background))
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
+ 
+           // .tryMap({ try NetworkManager.handleURLResponse(output: $0 )})
+           // .decode(type: T.self, decoder: JSONDecoder())
+           // .mapError { error in NetworkError.decodeError("decoding error")}
+        // process on background/private queue
+          
+        // send result on main queue
+          
     }
         
     
