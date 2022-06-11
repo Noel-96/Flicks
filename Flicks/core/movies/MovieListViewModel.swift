@@ -20,6 +20,15 @@ final class MovieListViewModel: ObservableObject {
     @Published var isOffline = false
     @Published var showNoData = false
     
+    @Published var category: Endpoints.Movies.Category = .popular {
+        didSet {
+            getMovies()
+        }
+    }
+    
+    
+    
+    
     private lazy var showOfflineView: AnyPublisher<Bool, Never> = {
         Publishers
             .CombineLatest3(self.$dataType, self.$isLoading, self.$isRefreshing)
@@ -47,7 +56,7 @@ final class MovieListViewModel: ObservableObject {
     }()
     
     
-    var category: Endpoints.Movies.Category = .popular
+  //  var category: Endpoints.Movies.Category = .popular
     
     private let moviesStore: MovieListProtocol
     
@@ -98,4 +107,6 @@ final class MovieListViewModel: ObservableObject {
         
         moviesStore.fetchMoviesList(category: category) 
     }
+    
+ 
 }

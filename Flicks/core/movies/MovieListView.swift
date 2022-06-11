@@ -20,7 +20,11 @@ struct MovieListView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
+            VStack(spacing: 20) {
+                
+                FilterTabView(selectedTab: $viewModel.category)
+                
+                
                 if viewModel.showNoData {
                     Text("Unable to load Movies list")
                 } else if viewModel.isLoading {

@@ -18,11 +18,11 @@ struct Endpoints {
         private var path: String { "movie" }
         
         
-        enum Category: String {
-            case upcoming
-            case top_rated
-            case popular
-            case now_playing
+        enum Category: String, Equatable {
+            case upcoming = "upcoming"
+            case top_rated = "top_rated"
+            case popular = "popular"
+            case now_playing = "now_playing"
         }
         
         let page: Int
