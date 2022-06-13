@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CoreData
 
 
 final class MovieListViewModel: ObservableObject {
@@ -20,12 +21,19 @@ final class MovieListViewModel: ObservableObject {
     @Published var isOffline = false
     @Published var showNoData = false
     
+    @Published var page: Int = 1 {
+        didSet {
+            getMovies()
+        }
+    }
+    
     @Published var category: Endpoints.Movies.Category = .popular {
         didSet {
             getMovies()
         }
     }
     
+ 
     
     
     
@@ -105,8 +113,30 @@ final class MovieListViewModel: ObservableObject {
         self.isRefreshing = self.dataType != .noData
         self.isLoading = self.dataType == .noData
         
-        moviesStore.fetchMoviesList(category: category) 
+        moviesStore.fetchMoviesList(page: page, category: category)
     }
     
- 
+    
+    func getMoreMovies(currentItem: Movie) {
+//        let users:  [Movie]
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
+//        var movieArray
+//        do {
+//             movieArray = try managedObjectContext.count(for: fetchRequest)
+//        }
+//        catch {
+//            print("error executing fetch request: \(error)")
+//        }
+
+        
+//        let thresholdIndex = users.index(users.endIndex, offsetBy: -1)
+//        if thresholdIndex == currentItem.id{
+                  //,(page + 1) <= totalPages {
+//        if page < 3 {
+//        page += 1
+//        moviesStore.fetchMoreMoviesList(page: page, category: category)
+//        }
+//               }
+//        moviesStore.getMoviesList()
+    }
 }

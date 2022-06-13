@@ -7,6 +7,8 @@
 
 import Foundation
 
+//TODO ARRANGE THE ERROR STATEMENTS
+//TODO PAGINATION 
 
 class Movies: Codable {
     let page: Int

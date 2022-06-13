@@ -17,5 +17,9 @@ struct MoviesStoreResult {
 protocol MovieListProtocol {
     var moviesResponseSubject: PassthroughSubject<MoviesStoreResult, Error> { get }
     
-    func fetchMoviesList(category: Endpoints.Movies.Category)
+    func fetchMoviesList(page: Int , category: Endpoints.Movies.Category)
+    
+    func fetchMoreMoviesList(page: Int , category: Endpoints.Movies.Category)
+    
+    func getMoviesList ()
 }

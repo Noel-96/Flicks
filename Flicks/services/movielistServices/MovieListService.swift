@@ -36,8 +36,8 @@ final class MovieListService: MovieListProtocol {
      }
      
     
-     func fetchMoviesList(category: Endpoints.Movies.Category) {
-         let endpoint = Endpoints.Movies(category: category)
+     func fetchMoviesList(page: Int , category: Endpoints.Movies.Category) {
+         let endpoint = Endpoints.Movies(page: page , category: category)
          let backgroundContext = self.coreDataStack.backgroundContext
 
          let decoder = JSONDecoder()
@@ -69,6 +69,40 @@ final class MovieListService: MovieListProtocol {
           
      }
      
+     
+     func fetchMoreMoviesList(page: Int , category: Endpoints.Movies.Category) {
+         let endpoint = Endpoints.Movies(page: page , category: category)
+         let backgroundContext = self.coreDataStack.backgroundContext
+
+         let decoder = JSONDecoder()
+         decoder.userInfo[CodingUserInfoKey.context] = backgroundContext
+         
+         let networkCallPublisher: AnyPublisher<Movies, Error> =  networkManager.get(type: Movies.self, endpoint: endpoint, headers: [:], decoder: decoder)
+
+          networkCallPublisher.sink {  (completion) in
+              switch completion {
+              case .finished: break
+              case .failure(let error):
+                   print("ze error waz ere \(error)")
+                   self.apiFailureHandler(error: error)
+              }
+          } receiveValue: { [weak self] (_) in
+               do {
+               //    try self?.deleteAllMovies()
+                //   try self?.coreDataStack.saveContext()
+                   
+//                   if self?.getPersistedMoviesCount() ?? 0 != 0 {
+                       self?.moviesResponseSubject.send(MoviesStoreResult(dataType: .live, error: nil))
+//                   } else {
+//                       self?.moviesResponseSubject.send(MoviesStoreResult(dataType: .noData, error: nil))
+//                   }
+               } catch (let coreDataError) {
+                  // apiFailureHandler(error: coreDataError)
+               }
+           }.store(in: &cancellableSet)
+          
+     }
+     
      func deleteAllMovies() throws {
          let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Movie.fetchRequest()
          let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -88,4 +122,22 @@ final class MovieListService: MovieListProtocol {
          let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
          return (try? coreDataStack.viewContext.count(for: fetchRequest)) ?? 0
      }
+     
+//     func getMoviesList (){
+//         let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
+//          coreDataStack.backgroundContext.perform {
+//                 do {
+//                     // Execute Fetch Request
+//                     let result = try fetchRequest.execute()
+//
+//                     // Update Books Label
+//                     print("result")
+//                      print(result)
+//
+//                 } catch {
+//                     print("Unable to Execute Fetch Request, \(error)")
+//                 }
+//             }
+//     }
+     
 }

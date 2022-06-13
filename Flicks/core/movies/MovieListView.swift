@@ -34,6 +34,7 @@ struct MovieListView: View {
                     if viewModel.isOffline {
                         OfflineBarView()
                     }
+                    
                     ScrollView {
                         LazyVStack(spacing: 15) {
                             ForEach(movies) { movie in
@@ -42,6 +43,7 @@ struct MovieListView: View {
                                         .background(Color.white)
                                         .cornerRadius(15)
                                         .shadow(radius: 3)
+                                        .onAppear(){viewModel.getMoreMovies(currentItem: movie)}
                                 }
                             }.buttonStyle(PlainButtonStyle())
                         }.padding()

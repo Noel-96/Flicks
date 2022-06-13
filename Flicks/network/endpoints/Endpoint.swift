@@ -28,7 +28,7 @@ struct Endpoints {
         let page: Int
         let category: Category
         
-        init(page: Int = 1, category: Category) {
+        init(page: Int, category: Category) {
             self.page = page
             self.category = category
         }
