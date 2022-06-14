@@ -28,10 +28,10 @@ final class MovieListService: MovieListProtocol {
      func apiFailureHandler(error: Error) {
          if self.getPersistedMoviesCount() != 0 {
               print("cached ")
-             self.moviesResponseSubject.send(MoviesStoreResult(dataType: .cached, error: error))
+             self.moviesResponseSubject.send(MoviesStoreResult(dataType: .cached , movieList: [], error: error))
          } else {
               print("aint no data ")
-             self.moviesResponseSubject.send(MoviesStoreResult(dataType: .noData, error: error))
+             self.moviesResponseSubject.send(MoviesStoreResult(dataType: .noData , movieList: [], error: error))
          }
      }
      
@@ -52,25 +52,25 @@ final class MovieListService: MovieListProtocol {
                    print("ze error waz ere \(error)")
                    self.apiFailureHandler(error: error)
               }
-          } receiveValue: { [weak self] (_) in
+          } receiveValue: { [weak self] (movies) in
                do {
                    try self?.deleteAllMovies()
                    try self?.coreDataStack.saveContext()
                    
                    if self?.getPersistedMoviesCount() ?? 0 != 0 {
-                       self?.moviesResponseSubject.send(MoviesStoreResult(dataType: .live, error: nil))
+                        self?.moviesResponseSubject.send(MoviesStoreResult (dataType: .live, movieList: movies.results, error: nil) )
                    } else {
-                       self?.moviesResponseSubject.send(MoviesStoreResult(dataType: .noData, error: nil))
+                       self?.moviesResponseSubject.send(MoviesStoreResult(dataType: .noData , movieList: movies.results, error: nil))
                    }
                } catch (let coreDataError) {
-                  // apiFailureHandler(error: coreDataError)
+                    self!.apiFailureHandler(error: coreDataError)
                }
            }.store(in: &cancellableSet)
           
      }
      
      
-     func fetchMoreMoviesList(page: Int , category: Endpoints.Movies.Category) {
+     func fetchMoreMoviesList(page: Int , category: Endpoints.Movies.Category, movieList: [Movie]) {
          let endpoint = Endpoints.Movies(page: page , category: category)
          let backgroundContext = self.coreDataStack.backgroundContext
 
@@ -86,22 +86,22 @@ final class MovieListService: MovieListProtocol {
                    print("ze error waz ere \(error)")
                    self.apiFailureHandler(error: error)
               }
-          } receiveValue: { [weak self] (_) in
+          } receiveValue: { [weak self] (movies) in
                do {
-               //    try self?.deleteAllMovies()
-                //   try self?.coreDataStack.saveContext()
+                   try self?.deleteAllMovies()
+                   let newmovielist = movieList + movies.results
+                   try self?.batchSaveMovies(movieList: newmovielist)
+                   try self?.coreDataStack.saveContext()
                    
-//                   if self?.getPersistedMoviesCount() ?? 0 != 0 {
-                       self?.moviesResponseSubject.send(MoviesStoreResult(dataType: .live, error: nil))
-//                   } else {
-//                       self?.moviesResponseSubject.send(MoviesStoreResult(dataType: .noData, error: nil))
-//                   }
+                   self?.moviesResponseSubject.send(MoviesStoreResult (dataType: .live, movieList: newmovielist, error: nil) )
+                  
                } catch (let coreDataError) {
-                  // apiFailureHandler(error: coreDataError)
+                    self!.apiFailureHandler(error: coreDataError)
                }
            }.store(in: &cancellableSet)
           
      }
+
      
      func deleteAllMovies() throws {
          let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Movie.fetchRequest()
@@ -123,21 +123,21 @@ final class MovieListService: MovieListProtocol {
          return (try? coreDataStack.viewContext.count(for: fetchRequest)) ?? 0
      }
      
-//     func getMoviesList (){
-//         let fetchRequest: NSFetchRequest<Movie> = Movie.fetchRequest()
-//          coreDataStack.backgroundContext.perform {
-//                 do {
-//                     // Execute Fetch Request
-//                     let result = try fetchRequest.execute()
-//
-//                     // Update Books Label
-//                     print("result")
-//                      print(result)
-//
-//                 } catch {
-//                     print("Unable to Execute Fetch Request, \(error)")
-//                 }
-//             }
-//     }
+     
+     func batchSaveMovies(movieList: [Movie]) throws {
+          do {
+               for movie in movieList{
+                    let cachedMovie = Movie(context: coreDataStack.backgroundContext)
+                    cachedMovie.id = movie.id
+                    cachedMovie.overview = movie.overview
+                    cachedMovie.popularity = movie.popularity
+                    cachedMovie.posterPath = movie.posterPath
+                    cachedMovie.title = movie.title
+               }
+          } catch {
+              throw error
+          }
+     }
+
      
 }

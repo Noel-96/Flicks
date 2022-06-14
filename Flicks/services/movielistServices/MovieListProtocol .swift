@@ -11,6 +11,7 @@ import Combine
 
 struct MoviesStoreResult {
     let dataType: DataType
+    let movieList: [Movie]?
     let error: Error?
 }
 
@@ -19,7 +20,6 @@ protocol MovieListProtocol {
     
     func fetchMoviesList(page: Int , category: Endpoints.Movies.Category)
     
-    func fetchMoreMoviesList(page: Int , category: Endpoints.Movies.Category)
-    
-    func getMoviesList ()
+    func fetchMoreMoviesList(page: Int , category: Endpoints.Movies.Category, movieList: [Movie])
+
 }

@@ -179,6 +179,7 @@
 		4E2374C02811C3B9000EB769 /* FlicksTests */ = {
 			isa = PBXGroup;
 			children = (
+				4EFAF1962857D10E002957A0 /* movieList */,
 				4E2374C12811C3B9000EB769 /* FlicksTests.swift */,
 			);
 			path = FlicksTests;
@@ -246,8 +247,8 @@
 		4E93F1132816C62400B6D05A /* movielistServices */ = {
 			isa = PBXGroup;
 			children = (
-				4E93F1142816C63B00B6D05A /* MovieListProtocol .swift */,
 				4E93F1162816C67200B6D05A /* MovieListService.swift */,
+				4E93F1142816C63B00B6D05A /* MovieListProtocol .swift */,
 			);
 			path = movielistServices;
 			sourceTree = "<group>";
@@ -310,6 +311,13 @@
 				4E8655B8284F736400FF01DE /* MovieDetailsViewDestination.swift */,
 			);
 			path = movieDetails;
+			sourceTree = "<group>";
+		};
+		4EFAF1962857D10E002957A0 /* movieList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = movieList;
 			sourceTree = "<group>";
 		};
 		4EFF4119284D355900545CD7 /* movieDetailServices */ = {

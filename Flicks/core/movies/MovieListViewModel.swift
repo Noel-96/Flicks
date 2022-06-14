@@ -17,19 +17,23 @@ final class MovieListViewModel: ObservableObject {
 
     @Published var dataType: DataType = .noData
     @Published var error: Error? = nil
+    @Published var movieListCopy: [Movie] = []
     
     @Published var isOffline = false
     @Published var showNoData = false
     
     @Published var page: Int = 1 {
         didSet {
-            getMovies()
+            print("page changed")
+            print(page)
+           getMovies()
         }
     }
     
     @Published var category: Endpoints.Movies.Category = .popular {
         didSet {
-            getMovies()
+            print("category changed")
+            page = 1
         }
     }
     
@@ -101,6 +105,9 @@ final class MovieListViewModel: ObservableObject {
                 self?.isLoading = false
                 self?.isRefreshing = false
                 self?.dataType = moviesStoreResult.dataType
+                
+                self?.movieListCopy = moviesStoreResult.movieList!
+                
             }.store(in: &cancellableSet)
     }
     
@@ -113,30 +120,15 @@ final class MovieListViewModel: ObservableObject {
         self.isRefreshing = self.dataType != .noData
         self.isLoading = self.dataType == .noData
         
+        if page == 1 {
+            print("page 1")
         moviesStore.fetchMoviesList(page: page, category: category)
+        } else {
+            
+            print("page xxx")
+        moviesStore.fetchMoreMoviesList(page: page, category: category, movieList: movieListCopy)
+        }
     }
     
     
-    func getMoreMovies(currentItem: Movie) {
-//        let users:  [Movie]
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Movie")
-//        var movieArray
-//        do {
-//             movieArray = try managedObjectContext.count(for: fetchRequest)
-//        }
-//        catch {
-//            print("error executing fetch request: \(error)")
-//        }
-
-        
-//        let thresholdIndex = users.index(users.endIndex, offsetBy: -1)
-//        if thresholdIndex == currentItem.id{
-                  //,(page + 1) <= totalPages {
-//        if page < 3 {
-//        page += 1
-//        moviesStore.fetchMoreMoviesList(page: page, category: category)
-//        }
-//               }
-//        moviesStore.getMoviesList()
-    }
 }

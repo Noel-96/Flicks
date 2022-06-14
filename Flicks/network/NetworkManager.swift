@@ -13,12 +13,6 @@ class NetworkManager: NetworkType {
                           // ,timeout: Float?,
                            ) -> AnyPublisher<T, Error>  {
         
-//        guard let url = url else {
-//            return AnyPublisher (
-//                Fail<T, Error>(error: NetworkError.invalidRequest)
-//            )
-//        }
-        
         var urlRequest = endpoint.createUrl()
         //URLRequest(url: url)
         headers.forEach { (key, value) in

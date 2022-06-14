@@ -43,7 +43,10 @@ struct MovieListView: View {
                                         .background(Color.white)
                                         .cornerRadius(15)
                                         .shadow(radius: 3)
-                                        .onAppear(){viewModel.getMoreMovies(currentItem: movie)}
+                                        .onAppear(){
+                                            if (self.movies.last == movie){
+                                            viewModel.page += 1
+                                        }}
                                 }
                             }.buttonStyle(PlainButtonStyle())
                         }.padding()
