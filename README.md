@@ -47,7 +47,7 @@ The app relies on no external libraries,
   - Clean Build Folder  
 - Click on Run
 
-Funtionality
+## Funtionality
 ## MoviesList
 The page by default loads the popular movies from the TMDB database and caches it to coredata for offline usage, when the app is offline an bar is show to indicate that the current movie data is cached data. Using network monitoring if there is nodata the app reload the movies list.
 
