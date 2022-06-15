@@ -24,15 +24,12 @@ final class MovieListViewModel: ObservableObject {
     
     @Published var page: Int = 1 {
         didSet {
-            print("page changed")
-            print(page)
            getMovies()
         }
     }
     
     @Published var category: Endpoints.Movies.Category = .popular {
         didSet {
-            print("category changed")
             page = 1
         }
     }
@@ -80,13 +77,7 @@ final class MovieListViewModel: ObservableObject {
         showOfflineView.assign(to: &self.$isOffline)
         showNoDataLabel.assign(to: &self.$showNoData)
         
-//        NotificationCenter.default.publisher(for: .reachabilityChanged)
-//            .sink(receiveValue: { [weak self] (notification) in
-//                guard let self = self, let reachability = notification.object as? Reachability,
-//                      reachability.connection != .unavailable, self.showNoData else { return }
-//                self.getMovies()
-//            })
-//            .store(in: &cancellableSet)
+
         
         bindStore()
         getMovies()
@@ -121,11 +112,8 @@ final class MovieListViewModel: ObservableObject {
         self.isLoading = self.dataType == .noData
         
         if page == 1 {
-            print("page 1")
         moviesStore.fetchMoviesList(page: page, category: category)
         } else {
-            
-            print("page xxx")
         moviesStore.fetchMoreMoviesList(page: page, category: category, movieList: movieListCopy)
         }
     }

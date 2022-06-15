@@ -49,7 +49,6 @@ final class MovieListService: MovieListProtocol {
               switch completion {
               case .finished: break
               case .failure(let error):
-                   print("ze error waz ere \(error)")
                    self.apiFailureHandler(error: error)
               }
           } receiveValue: { [weak self] (movies) in
@@ -83,7 +82,6 @@ final class MovieListService: MovieListProtocol {
               switch completion {
               case .finished: break
               case .failure(let error):
-                   print("ze error waz ere \(error)")
                    self.apiFailureHandler(error: error)
               }
           } receiveValue: { [weak self] (movies) in

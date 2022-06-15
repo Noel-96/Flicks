@@ -31,6 +31,9 @@
 		4E93F11B281718BE00B6D05A /* MovieListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E93F11A281718BE00B6D05A /* MovieListViewModel.swift */; };
 		4E93F11D28172A0A00B6D05A /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E93F11C28172A0A00B6D05A /* PersistenceController.swift */; };
 		4E93F12028172C1C00B6D05A /* MoviesModel_DB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4E93F11E28172C1C00B6D05A /* MoviesModel_DB.xcdatamodeld */; };
+		4E9411F72859CCA500521340 /* MockNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9411F62859CCA500521340 /* MockNetworkManager.swift */; };
+		4E9411F92859CEB300521340 /* MockMoviesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9411F82859CEB300521340 /* MockMoviesService.swift */; };
+		4E9411FB2859D05600521340 /* MoviesService_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9411FA2859D05600521340 /* MoviesService_Tests.swift */; };
 		4EA728422832B51A0037302C /* Movies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA728412832B51A0037302C /* Movies.swift */; };
 		4EB1ABAA284CF84500010485 /* OfflineBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB1ABA9284CF84500010485 /* OfflineBarView.swift */; };
 		4EB1ABAC284CFA6500010485 /* MovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB1ABAB284CFA6500010485 /* MovieView.swift */; };
@@ -91,6 +94,9 @@
 		4E93F11A281718BE00B6D05A /* MovieListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModel.swift; sourceTree = "<group>"; };
 		4E93F11C28172A0A00B6D05A /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		4E93F11F28172C1C00B6D05A /* MoviesModel_DB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoviesModel_DB.xcdatamodel; sourceTree = "<group>"; };
+		4E9411F62859CCA500521340 /* MockNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkManager.swift; sourceTree = "<group>"; };
+		4E9411F82859CEB300521340 /* MockMoviesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMoviesService.swift; sourceTree = "<group>"; };
+		4E9411FA2859D05600521340 /* MoviesService_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesService_Tests.swift; sourceTree = "<group>"; };
 		4EA728412832B51A0037302C /* Movies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movies.swift; sourceTree = "<group>"; };
 		4EB1ABA9284CF84500010485 /* OfflineBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineBarView.swift; sourceTree = "<group>"; };
 		4EB1ABAB284CFA6500010485 /* MovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieView.swift; sourceTree = "<group>"; };
@@ -179,6 +185,7 @@
 		4E2374C02811C3B9000EB769 /* FlicksTests */ = {
 			isa = PBXGroup;
 			children = (
+				4E9411F52859CC8900521340 /* network */,
 				4EFAF1962857D10E002957A0 /* movieList */,
 				4E2374C12811C3B9000EB769 /* FlicksTests.swift */,
 			);
@@ -253,6 +260,14 @@
 			path = movielistServices;
 			sourceTree = "<group>";
 		};
+		4E9411F52859CC8900521340 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				4E9411F62859CCA500521340 /* MockNetworkManager.swift */,
+			);
+			path = network;
+			sourceTree = "<group>";
+		};
 		4EC526DD28547B8F006DA250 /* filters */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +331,8 @@
 		4EFAF1962857D10E002957A0 /* movieList */ = {
 			isa = PBXGroup;
 			children = (
+				4E9411F82859CEB300521340 /* MockMoviesService.swift */,
+				4E9411FA2859D05600521340 /* MoviesService_Tests.swift */,
 			);
 			path = movieList;
 			sourceTree = "<group>";
@@ -498,6 +515,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E9411F72859CCA500521340 /* MockNetworkManager.swift in Sources */,
+				4E9411F92859CEB300521340 /* MockMoviesService.swift in Sources */,
+				4E9411FB2859D05600521340 /* MoviesService_Tests.swift in Sources */,
 				4E2374C22811C3B9000EB769 /* FlicksTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
